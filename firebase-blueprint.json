@@ -1,0 +1,102 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "role": { "type": "string", "enum": ["patient", "family", "admin"] },
+        "age": { "type": "integer" },
+        "language": { "type": "string", "enum": ["en", "ta"] },
+        "familyMembers": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "name", "email", "role"]
+    },
+    "Medicine": {
+      "title": "Medicine",
+      "description": "Medicine entry for a user",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string", "enum": ["tablet", "syrup", "capsule", "injection", "drops"] },
+        "dosage": { "type": "string" },
+        "totalQuantity": { "type": "number" },
+        "remainingQuantity": { "type": "number" },
+        "expiryDate": { "type": "string", "format": "date-time" },
+        "reminderTimes": { "type": "array" },
+        "notes": { "type": "string" },
+        "userId": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "type", "userId", "reminderTimes"]
+    },
+    "ReminderLog": {
+      "title": "Reminder Log",
+      "description": "History of medicine consumption",
+      "type": "object",
+      "properties": {
+        "medicineId": { "type": "string" },
+        "userId": { "type": "string" },
+        "scheduledTime": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending", "taken", "skipped", "remind-later"] },
+        "respondedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["medicineId", "userId", "scheduledTime", "status"]
+    },
+    "VoiceLog": {
+      "title": "Voice Interaction Log",
+      "description": "History of AI assistant interactions",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "userInput": { "type": "string" },
+        "aiResponse": { "type": "string" },
+        "intent": { "type": "string" },
+        "language": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "userInput", "aiResponse"]
+    },
+    "FamilyContact": {
+      "title": "Family Contact",
+      "description": "Emergency contact info",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "patientId": { "type": "string" },
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "relation": { "type": "string" }
+      },
+      "required": ["userId", "patientId", "name", "relation"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/medicines/{medicineId}": {
+      "schema": "Medicine",
+      "description": "Medicine repository"
+    },
+    "/reminderLogs/{logId}": {
+      "schema": "ReminderLog",
+      "description": "Logs for reminders"
+    },
+    "/voiceLogs/{logId}": {
+      "schema": "VoiceLog",
+      "description": "Voice logs"
+    },
+    "/familyContacts/{contactId}": {
+      "schema": "FamilyContact",
+      "description": "Family alerts contacts"
+    }
+  }
+}

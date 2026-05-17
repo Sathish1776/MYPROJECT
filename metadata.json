@@ -1,0 +1,6 @@
+{
+  "name": "MediVoice AI",
+  "description": "Smart Medicine Care Assistant with AI voice assistant, Tamil support, and emergency alerts.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
